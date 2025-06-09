@@ -2,6 +2,8 @@
 
 Sistema inteligente de análise de vendas com geração automática de relatórios e visualizações utilizando IA.
 
+## 🔗 Acesse: https://gerador-relatorio-ia.streamlit.app
+
 ## 📌 Funcionalidades
 
 - Upload de arquivos CSV de vendas
