@@ -5,7 +5,10 @@ import requests
 import plotly.express as px
 import plotly.graph_objects as go
 from datetime import datetime
-from config import IAHUB_API_KEY, IAHUB_URL
+#from config import IAHUB_API_KEY, IAHUB_URL
+
+IAHUB_API_KEY = st.secrets["IAHUB_API_KEY"]
+IAHUB_URL = st.secrets["IAHUB_URL"]
 
 # Configuração da página
 st.set_page_config(
