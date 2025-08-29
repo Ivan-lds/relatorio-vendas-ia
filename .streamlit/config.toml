@@ -1,0 +1,3 @@
+[server]
+# O arquivo principal que o Streamlit deve executar
+entrypoint = "main.py"
