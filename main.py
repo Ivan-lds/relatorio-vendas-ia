@@ -60,8 +60,8 @@ with st.sidebar:
         ---
         Suporte:
                 
-            Whatsapp-(75) 98885-5230
-            Ligação-(75) 99941-5339
+        Whatsapp - (75) 98885-5230
+        Ligação - (75) 99941-5339
     """)
 
 st.title("📈 Analytics BI Pro")
