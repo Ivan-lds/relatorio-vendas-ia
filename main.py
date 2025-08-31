@@ -11,6 +11,7 @@ from src.visuals import (
     show_temporal_segmentation_analysis,
     show_report
 )
+from src.plans import show_pricing
 
 
 st.set_page_config(
@@ -19,6 +20,12 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded"
 )
+
+menu = st.radio("",["📊 Dashboard", "💰 Planos"], horizontal=True)
+
+if menu == "💰 Planos":
+    show_pricing()
+    st.stop()
 
 with st.sidebar:
     st.header("ℹ️ Informações")

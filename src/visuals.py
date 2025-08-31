@@ -41,7 +41,6 @@ def show_metric_cards(total_vendas, vendas_por_dia, numero_dias, total_estados, 
             st.metric("Lucro Bruto", f"R$ {lucro_bruto:,.2f}" if lucro_bruto is not None else "N/D")
         with col4:
             st.metric("Lucro Líquido", f"R$ {lucro_liquido:,.2f}" if lucro_liquido is not None else "N/D")
-        st.markdown("---")
 
 def show_geotemporal_analysis(top_estados, df_semanal, df, col_estado, col_vendas, col_data):
     st.markdown("#### 📊 Análise Geográfica e Temporal")
