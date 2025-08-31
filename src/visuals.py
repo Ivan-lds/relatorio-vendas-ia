@@ -166,12 +166,43 @@ def show_client_product_analysis(top_clientes, top_produtos, vendas_por_categori
     st.dataframe(tabela_produtos, use_container_width=True)
     export_table_buttons(tabela_produtos, "Top Produtos")
 
-def show_report(report, dados_suficientes, col_data, col_vendas, col_estado):
-    # Botão de pausar geração do relatório sempre visível
-    if st.button("Pausar geração do relatório", key="pause_report"):
-        st.warning("Geração do relatório pausada pelo usuário.")
-        st.stop()
+def export_report_pdf(report_md):
+    from reportlab.lib.pagesizes import A4
+    from reportlab.pdfgen import canvas
+    import streamlit as st
+    import tempfile
+    if not report_md:
+        st.info("Relatório não disponível para exportação.")
+        return
+    # Converte Markdown para texto simples
+    texto = report_md.replace('**', '').replace('#', '').replace('###', '').replace('##', '')
+    with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as tmpfile:
+        c = canvas.Canvas(tmpfile.name, pagesize=A4)
+        width, height = A4
+        y = height - 40
+        for linha in texto.splitlines():
+            if linha.strip():
+                c.drawString(40, y, linha.strip())
+                y -= 16
+                if y < 40:
+                    c.showPage()
+                    y = height - 40
+        c.save()
+        tmpfile.seek(0)
+        st.download_button(
+            label="Exportar Relatório Analítico (PDF)",
+            data=tmpfile.read(),
+            file_name="relatorio_analitico.pdf",
+            mime="application/pdf"
+        )
 
+def show_report(report, dados_suficientes, col_data, col_vendas, col_estado):
+    col_pause, col_pdf = st.columns([3.6, 1])
+    with col_pause:
+        if st.button("Pausar geração do relatório", key="pause_report"):
+            st.warning("Geração do relatório pausada pelo usuário.")
+            st.stop()
+    report_md = None
     if report and dados_suficientes:
         with st.spinner("🔄 Gerando análise inteligente..."):
             try:
@@ -200,7 +231,10 @@ def show_report(report, dados_suficientes, col_data, col_vendas, col_estado):
                     st.error(f"Detalhes: {response.text}")
             except Exception as e:
                 st.error(f"Erro ao gerar relatório: {str(e)}")
-    elif not dados_suficientes:
+    if report_md:
+        with col_pdf:
+            export_report_pdf(report_md)
+    if not dados_suficientes:
         st.warning("⚠️ **Dados Insuficientes para Relatório**")
         st.info(f"""
         Para gerar um relatório analítico, o CSV deve conter pelo menos:
@@ -212,14 +246,8 @@ def show_report(report, dados_suficientes, col_data, col_vendas, col_estado):
         - Vendas: {'✅' if col_vendas else '❌'} {col_vendas or 'Não encontrada'}
         - Estados: {'✅' if col_estado else '❌'} {col_estado or 'Não encontrada'}
         """)
-    else:
+    if not report and not dados_suficientes:
         st.info("Relatório não disponível: verifique se a API respondeu corretamente.")
-    st.markdown("---")
-    st.markdown("##### Tabela Dinâmica - Resumo de Dados para Relatório")
-    resumo = {"Coluna": ["Data", "Vendas", "Estados"], "Detectada": [col_data or "Não encontrada", col_vendas or "Não encontrada", col_estado or "Não encontrada"]}
-    df_resumo = pd.DataFrame(resumo)
-    st.dataframe(df_resumo, use_container_width=True)
-    export_table_buttons(df_resumo, "Resumo Relatório")
 
 def show_commercial_financial_analysis(top_vendedores, vendas_por_canal, vendas_por_pagamento):
     st.markdown("#### 💼 Análise Comercial e Financeira")
