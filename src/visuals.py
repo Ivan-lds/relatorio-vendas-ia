@@ -70,6 +70,13 @@ def show_geotemporal_analysis(top_estados, df_semanal, df, col_estado, col_venda
                 st.info("Sem dados suficientes para a distribuição por estado.")
         else:
             st.info("Colunas de estado e vendas não disponíveis para a pizza.")
+    st.markdown("---")
+    st.markdown("##### Tabela Dinâmica - Vendas por Estado")
+    if col_estado and col_vendas and col_estado in df.columns and col_vendas in df.columns:
+        tabela_estado = df.groupby(col_estado)[col_vendas].sum().reset_index().sort_values(col_vendas, ascending=False)
+        st.dataframe(tabela_estado, use_container_width=True)
+    else:
+        st.info("Não foi possível gerar a tabela dinâmica de estados.")
 
 def show_client_product_analysis(top_clientes, top_produtos, vendas_por_categoria):
     st.markdown("#### 👥 Análise de Clientes e Produtos")
@@ -95,6 +102,13 @@ def show_client_product_analysis(top_clientes, top_produtos, vendas_por_categori
             st.plotly_chart(fig_categoria, use_container_width=True)
         else:
             st.info("Sem dados suficientes para a distribuição por categoria.")
+    st.markdown("---")
+    st.markdown("##### Tabela Dinâmica - Top Clientes e Produtos")
+    import pandas as pd
+    tabela_clientes = pd.DataFrame({"Cliente": top_clientes.index, "Total Compras": top_clientes.values}) if top_clientes is not None else pd.DataFrame()
+    tabela_produtos = pd.DataFrame({"Produto": top_produtos.index, "Total Vendas": top_produtos.values}) if top_produtos is not None else pd.DataFrame()
+    st.dataframe(tabela_clientes, use_container_width=True)
+    st.dataframe(tabela_produtos, use_container_width=True)
 
 def show_report(report, dados_suficientes, col_data, col_vendas, col_estado):
     if report and dados_suficientes:
@@ -139,6 +153,7 @@ def show_report(report, dados_suficientes, col_data, col_vendas, col_estado):
         """)
     else:
         st.info("Relatório não disponível: verifique se a API respondeu corretamente.")
+
 def show_commercial_financial_analysis(top_vendedores, vendas_por_canal, vendas_por_pagamento):
     st.markdown("#### 💼 Análise Comercial e Financeira")
     col_graf1, col_graf2, col_graf3 = st.columns(3)
@@ -176,6 +191,13 @@ def show_commercial_financial_analysis(top_vendedores, vendas_por_canal, vendas_
             st.plotly_chart(fig_pagamento, use_container_width=True)
         else:
             st.info("Sem dados suficientes para a distribuição por pagamento.")
+    st.markdown("---")
+    st.markdown("##### Tabela Dinâmica - Vendedores e Canais")
+    import pandas as pd
+    tabela_vendedores = pd.DataFrame({"Vendedor": top_vendedores.index, "Total Vendas": top_vendedores.values}) if top_vendedores is not None else pd.DataFrame()
+    tabela_canais = pd.DataFrame({"Canal": vendas_por_canal.index, "Total Vendas": vendas_por_canal.values}) if vendas_por_canal is not None else pd.DataFrame()
+    st.dataframe(tabela_vendedores, use_container_width=True)
+    st.dataframe(tabela_canais, use_container_width=True)
 
 def show_temporal_segmentation_analysis(vendas_por_mes, vendas_por_dia_semana, vendas_por_segmento):
     st.markdown("#### 📅 Análise Temporal e Segmentação")
@@ -212,6 +234,15 @@ def show_temporal_segmentation_analysis(vendas_por_mes, vendas_por_dia_semana, v
             st.plotly_chart(fig_segmento, use_container_width=True)
         else:
             st.info("Sem dados suficientes para a distribuição por segmento.")
+    st.markdown("---")
+    st.markdown("##### Tabela Dinâmica - Vendas por Mês, Dia da Semana e Segmento")
+    import pandas as pd
+    tabela_mes = pd.DataFrame({"Mês": vendas_por_mes.index, "Total Vendas": vendas_por_mes.values}) if vendas_por_mes is not None else pd.DataFrame()
+    tabela_dia_semana = pd.DataFrame({"Dia da Semana": vendas_por_dia_semana.index, "Total Vendas": vendas_por_dia_semana.values}) if vendas_por_dia_semana is not None else pd.DataFrame()
+    tabela_segmento = pd.DataFrame({"Segmento": vendas_por_segmento.index, "Total Vendas": vendas_por_segmento.values}) if vendas_por_segmento is not None else pd.DataFrame()
+    st.dataframe(tabela_mes, use_container_width=True)
+    st.dataframe(tabela_dia_semana, use_container_width=True)
+    st.dataframe(tabela_segmento, use_container_width=True)
 
 def plot_visao_geral(df_semanal, vendas_por_dia_semana, df, col_vendas, col_dia_semana, col_data):
     st.markdown("#### Visão Geral das Vendas")
