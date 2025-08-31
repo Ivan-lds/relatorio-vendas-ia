@@ -135,7 +135,7 @@ st.markdown(
     "<div style='text-align: center; color: #666;'>"
     "Suporte: "
     "Whatsapp - (75) 98885-5230"
-    " Ligação - (75) 99941-5339"
+    " | Ligação - (75) 99941-5339"
     "</div>",
     unsafe_allow_html=True
 )
