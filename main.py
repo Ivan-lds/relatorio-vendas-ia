@@ -58,7 +58,9 @@ with st.sidebar:
         Atenção: Se não houver dados suficientes, os gráficos e métricas não serão exibidos. Certifique-se de que seu CSV contém pelo menos as colunas de Data e Vendas para liberar todas as análises!
         
         ---
-        Desenvolvido por Ivan Lima | Suporte: ivanlimadossantos4@gmail.com
+        Suporte:
+            Whatsapp - (75) 98885-5230
+            Ligação - (75) 99941-5339
     """)
 
 st.title("📈 Analytics BI Pro")
@@ -130,7 +132,9 @@ else:
 st.markdown("---")
 st.markdown(
     "<div style='text-align: center; color: #666;'>"
-    "Desenvolvido por Ivan Lima | Suporte: ivanlimadossantos4@gmail.com"
+    "Suporte: "
+    "Whatsapp - (75) 98885-5230"
+    "Ligação - (75) 99941-5339"
     "</div>",
     unsafe_allow_html=True
 )
