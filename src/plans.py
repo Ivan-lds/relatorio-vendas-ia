@@ -13,45 +13,41 @@ PLANOS = {
     "basic": {
         "nome": "Básico",
         "preco": 197,
+        "ideal": "Ideal para pequenas empresas que estão começando",
         "features": [
-            "Dashboard básico de vendas",
-            "Atualização mensal",
-            "Principais métricas",
-            "1 usuário",
-            "Suporte por email",
-            "Até 1000 registros/mês"
+            "Dashboards Analíticos",
+            "Principais métricas de vendas e desempenho",
+            "Suporte por WhatsApp (48h)",
+            "Até 150 gerações/mês",
         ]
     },
     "pro": {
         "nome": "Profissional",
         "preco": 397,
+        "ideal": "Ideal para negócios em crescimento que precisam de mais suporte",
         "features": [
-            "Todas as features do plano básico",
-            "Atualização semanal",
-            "Análises avançadas",
-            "Relatório personalizado",
-            "3 usuários",
-            "Suporte por WhatsApp",
-            "Até 5000 registros/mês",
-            "Consultoria mensal (1h)"
+            "Dashboards Analíticos",
+            "Principais métricas de vendas e desempenho",
+            "Suporte por WhatsApp (24h)",
+            "Até 450 gerações/mês",
+            "Consultoria mensal (1h)",
         ]
     },
     "enterprise": {
         "nome": "Enterprise",
         "preco": 597,
+        "ideal": "Ideal para empresas consolidadas que precisam de soluções completas",
         "features": [
-            "Todas as features do plano profissional",
-            "Atualização diária",
-            "Dashboard personalizado",
-            "Relatórios sob demanda",
-            "Usuários ilimitados",
-            "Suporte prioritário",
-            "Registros ilimitados",
-            "Consultoria quinzenal (2h)",
-            "Treinamento da equipe"
+            "Dashboards Analíticos",
+            "Principais métricas de vendas e desempenho",
+            "Suporte por WhatsApp (4h)",
+            "Gerações ilimitadas",
+            "Consultoria mensal (remoto - sob demanda)",
+            "Treinamento da equipe (remoto)"
         ]
     }
 }
+
 
 def show_pricing():
     st.markdown("## 💰 Planos e Preços")
@@ -68,6 +64,7 @@ def show_pricing():
                 <ul style='padding-left:18px;'>
                     {''.join([f'<li>✅ {feature}</li>' for feature in plano['features']])}
                 </ul>
+                <h4 style='text-align:center; color:#999; font-size:14px;'>{plano['ideal']}</h4>
                 <div style='text-align:center; margin-top:16px;'>
                     <a href='{STRIPE_PAYMENT_LINKS[plano_id]}' target='_blank'>
                         <button style='background:#636EFA; color:white; border:none; border-radius:6px; padding:10px 24px; font-size:16px;'>Assinar Plano</button>
