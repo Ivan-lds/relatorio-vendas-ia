@@ -31,7 +31,7 @@ with st.sidebar:
     st.header("ℹ️ Informações")
     st.markdown("""
         ### Como usar
-        1. Faça upload do arquivo CSV
+        1. Faça upload do arquivo CSV ou Excel (xlsx)
         2. Aguarde a análise automática
         3. Receba insights estratégicos
         
@@ -55,7 +55,7 @@ with st.sidebar:
                 
         - As colunas são detectadas por nome (aceita maiúsculas/minúsculas)
                 
-        Atenção: Se não houver dados suficientes, os gráficos e métricas não serão exibidos. Certifique-se de que seu CSV contém pelo menos as colunas de Data e Vendas para liberar todas as análises!
+        Atenção: Se não houver dados suficientes, os gráficos e métricas não serão exibidos. Certifique-se de que seu arquivo contém pelo menos as colunas de Data e Vendas para liberar todas as análises!
         
         ---
         Suporte:
@@ -67,13 +67,17 @@ with st.sidebar:
 st.title("📈 Analytics BI Pro")
 st.markdown("### Sistema Inteligente de Análise de Vendas")
 
-csv_file = st.file_uploader("Selecione o arquivo CSV de vendas", type=["csv"])
+csv_file = st.file_uploader("Selecione o arquivo de vendas (CSV ou Excel)", type=["csv", "xlsx"])
 if not csv_file:
     st.warning("⚠️ Aguardando upload do arquivo...")
     st.stop()
 else:
     st.success("✅ Arquivo carregado com sucesso!")
-    df = pd.read_csv(csv_file)
+    filename = csv_file.name.lower()
+    if filename.endswith(".csv"):
+        df = pd.read_csv(csv_file)
+    else:
+        df = pd.read_excel(csv_file, engine="openpyxl")
     df.columns = df.columns.str.strip()
     # Detecta colunas principais
     colunas = {
