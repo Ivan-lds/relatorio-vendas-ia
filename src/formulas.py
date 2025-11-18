@@ -415,7 +415,7 @@ def show_formulas_catalog():
     categorias = list(FORMULAS.keys())
     categoria_selecionada = st.selectbox("📂 Filtrar por categoria:", ["Todas"] + categorias)
     
-    # Filtrar fórmulas
+    # Filtrar fórmulas por categoria primeiro
     formulas_filtradas = {}
     
     if categoria_selecionada == "Todas":
@@ -423,9 +423,9 @@ def show_formulas_catalog():
     else:
         formulas_filtradas = {categoria_selecionada: FORMULAS[categoria_selecionada]}
     
-    # Aplicar busca
+    # Aplicar busca sobre as fórmulas já filtradas por categoria
     if search_term:
-        formulas_filtradas = {}
+        formulas_buscadas = {}
         for categoria, formulas in formulas_filtradas.items():
             filtradas = [
                 f for f in formulas 
@@ -434,7 +434,8 @@ def show_formulas_catalog():
                 or search_term.lower() in f["exemplo"].lower()
             ]
             if filtradas:
-                formulas_filtradas[categoria] = filtradas
+                formulas_buscadas[categoria] = filtradas
+        formulas_filtradas = formulas_buscadas
     
     # Exibir fórmulas
     if not formulas_filtradas or all(not formulas for formulas in formulas_filtradas.values()):
