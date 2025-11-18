@@ -14,6 +14,7 @@ from src.visuals import (
 )
 from src.plans import show_pricing
 from src.formulas import show_formulas_catalog
+from src.spreadsheets import show_spreadsheets_catalog
 
 
 st.set_page_config(
@@ -81,7 +82,7 @@ def login_gate() -> bool:
 
 col_menu, col_logout = st.columns([8, 0.65])
 with col_menu:
-    menu = st.radio("", ["📊 Dashboard", "📚 Fórmulas", "💰 Planos"], horizontal=True)
+    menu = st.radio("", ["📊 Dashboard", "📚 Fórmulas", "📑 Planilhas", "💰 Planos"], horizontal=True)
 with col_logout:
     if st.session_state.get("auth_user"):
         if st.button("Sair"):
@@ -100,6 +101,10 @@ if menu == "💰 Planos":
 
 if menu == "📚 Fórmulas":
     show_formulas_catalog()
+    st.stop()
+
+if menu == "📑 Planilhas":
+    show_spreadsheets_catalog()
     st.stop()
 
 with st.sidebar:
