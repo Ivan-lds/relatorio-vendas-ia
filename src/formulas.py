@@ -405,7 +405,6 @@ FORMULAS = {
 def show_formulas_catalog():
     """Exibe o catálogo de fórmulas do Excel organizado por categorias"""
     st.markdown("## 📚 Catálogo de Fórmulas do Excel")
-    st.markdown("---")
     
     # Barra de pesquisa
     search_term = st.text_input("🔍 Pesquisar fórmula:", placeholder="Digite o nome da fórmula ou descrição...")
@@ -413,6 +412,8 @@ def show_formulas_catalog():
     # Filtro por categoria
     categorias = list(FORMULAS.keys())
     categoria_selecionada = st.selectbox("📂 Filtrar por categoria:", ["Todas"] + categorias)
+    
+    st.markdown("---")
     
     # Filtrar fórmulas por categoria primeiro
     formulas_filtradas = {}
@@ -444,7 +445,7 @@ def show_formulas_catalog():
             if not formulas:
                 continue
                 
-            st.markdown(f"### 📁 {categoria}")
+            st.markdown(f"### 🔵 {categoria}")
             
             # Criar cards para cada fórmula
             for i in range(0, len(formulas), 4):
