@@ -1,6 +1,7 @@
 # Arquivo principal para execução do dashboard
 import streamlit as st
 import pandas as pd
+from supabase import create_client, Client
 from src.utils import detectar_coluna, converter_tipos
 from src.metrics import calcular_metricas
 from src.visuals import (
@@ -22,7 +23,76 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-menu = st.radio("",["📊 Dashboard", "📚 Fórmulas", "💰 Planos"], horizontal=True)
+def get_supabase() -> Client:
+    url = st.secrets.get("SUPABASE_URL", "")
+    key = st.secrets.get("SUPABASE_ANON_KEY", "")
+    if not url or not key:
+        return None
+    try:
+        return create_client(url, key)
+    except Exception:
+        return None
+
+def login_gate() -> bool:
+    if "auth_user" not in st.session_state:
+        st.session_state.auth_user = None
+    if st.session_state.auth_user:
+        return True
+    sb = get_supabase()
+    if not sb:
+        st.info("Login desabilitado (credenciais Supabase ausentes). Prosseguindo sem login...")
+        return True
+    st.markdown("## 🔐 Acesso")
+    tab_login, tab_signup = st.tabs(["Entrar", "Criar conta"]) 
+
+    with tab_login:
+        with st.form("login_form", clear_on_submit=False):
+            email = st.text_input("E-mail")
+            password = st.text_input("Senha", type="password")
+            submitted = st.form_submit_button("Entrar")
+        if submitted:
+            try:
+                res = sb.auth.sign_in_with_password({"email": email, "password": password})
+                if res and getattr(res, "user", None):
+                    st.session_state.auth_user = {"email": email}
+                    st.rerun()
+                else:
+                    st.error("Credenciais inválidas.")
+            except Exception as e:
+                st.error(f"Erro no login: {e}")
+
+    with tab_signup:
+        with st.form("signup_form", clear_on_submit=False):
+            email_su = st.text_input("E-mail", key="signup_email")
+            password_su = st.text_input("Senha", type="password", key="signup_password")
+            submitted_su = st.form_submit_button("Criar conta")
+        if submitted_su:
+            try:
+                res = sb.auth.sign_up({"email": email_su, "password": password_su})
+                if res and getattr(res, "user", None):
+                    st.success("Conta criada! Verifique seu e-mail para confirmar o cadastro.")
+                    st.stop()
+                else:
+                    st.error("Não foi possível criar a conta.")
+            except Exception as e:
+                st.error(f"Erro no cadastro: {e}")
+    st.stop()
+    return False
+
+col_menu, col_logout = st.columns([8, 0.65])
+with col_menu:
+    menu = st.radio("", ["📊 Dashboard", "📚 Fórmulas", "💰 Planos"], horizontal=True)
+with col_logout:
+    if st.session_state.get("auth_user"):
+        if st.button("Sair"):
+            sb_tmp = get_supabase()
+            if sb_tmp:
+                try:
+                    sb_tmp.auth.sign_out()
+                except Exception:
+                    pass
+            st.session_state.auth_user = None
+            st.rerun()
 
 if menu == "💰 Planos":
     show_pricing()
@@ -36,7 +106,7 @@ with st.sidebar:
     st.header("ℹ️ Informações")
     st.markdown("""
         ### Como usar
-        1. Faça upload do arquivo CSV
+        1. Faça upload do arquivo CSV ou Excel (xlsx)
         2. Aguarde a análise automática
         3. Receba insights estratégicos
         
@@ -60,7 +130,7 @@ with st.sidebar:
                 
         - As colunas são detectadas por nome (aceita maiúsculas/minúsculas)
                 
-        Atenção: Se não houver dados suficientes, os gráficos e métricas não serão exibidos. Certifique-se de que seu CSV contém pelo menos as colunas de Data e Vendas para liberar todas as análises!
+        Atenção: Se não houver dados suficientes, os gráficos e métricas não serão exibidos. Certifique-se de que seu arquivo contém pelo menos as colunas de Data e Vendas para liberar todas as análises!
         
         ---
         Suporte:
@@ -68,17 +138,25 @@ with st.sidebar:
         Whatsapp - (75) 98885-5230
         Ligação - (75) 99941-5339
     """)
+    
+
+if not login_gate():
+    st.stop()
 
 st.title("📈 Analytics BI Pro")
 st.markdown("### Sistema Inteligente de Análise de Vendas")
 
-csv_file = st.file_uploader("Selecione o arquivo CSV de vendas", type=["csv"])
+csv_file = st.file_uploader("Selecione o arquivo de vendas (CSV ou Excel)", type=["csv", "xlsx"])
 if not csv_file:
     st.warning("⚠️ Aguardando upload do arquivo...")
     st.stop()
 else:
     st.success("✅ Arquivo carregado com sucesso!")
-    df = pd.read_csv(csv_file)
+    filename = csv_file.name.lower()
+    if filename.endswith(".csv"):
+        df = pd.read_csv(csv_file)
+    else:
+        df = pd.read_excel(csv_file, engine="openpyxl")
     df.columns = df.columns.str.strip()
     # Detecta colunas principais
     colunas = {
