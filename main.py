@@ -12,6 +12,7 @@ from src.visuals import (
     show_report
 )
 from src.plans import show_pricing
+from src.formulas import show_formulas_catalog
 
 
 st.set_page_config(
@@ -21,10 +22,14 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-menu = st.radio("",["📊 Dashboard", "💰 Planos"], horizontal=True)
+menu = st.radio("",["📊 Dashboard", "📚 Fórmulas", "💰 Planos"], horizontal=True)
 
 if menu == "💰 Planos":
     show_pricing()
+    st.stop()
+
+if menu == "📚 Fórmulas":
+    show_formulas_catalog()
     st.stop()
 
 with st.sidebar:
