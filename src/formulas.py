@@ -405,7 +405,6 @@ FORMULAS = {
 def show_formulas_catalog():
     """Exibe o catálogo de fórmulas do Excel organizado por categorias"""
     st.markdown("## 📚 Catálogo de Fórmulas do Excel")
-    st.markdown("### Guia completo de fórmulas para análise de dados")
     st.markdown("---")
     
     # Barra de pesquisa
