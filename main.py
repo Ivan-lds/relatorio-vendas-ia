@@ -185,7 +185,7 @@ else:
     df = converter_tipos(df, colunas['col_data'], colunas['col_vendas'])
     metricas = calcular_metricas(df, colunas)
     tabs = st.tabs([
-        "Visão Geral", "Geográfica/Temporal", "Clientes/Produtos", "Comercial/Financeiro", "Temporal/Segmentação", "Relatório"
+        "Visão Geral", "Geográfica/Temporal", "Clientes/Produtos", "Comercial/Financeiro", "Temporal/Segmentação", #"Relatório"
     ])
     with tabs[0]:
         show_metric_cards(
@@ -210,11 +210,11 @@ else:
         show_temporal_segmentation_analysis(
             metricas.get('vendas_por_mes'), metricas.get('vendas_por_dia_semana'), metricas.get('vendas_por_segmento')
         )
-    with tabs[5]:
-        show_report(
-            metricas.get('report'), metricas.get('dados_suficientes'),
-            colunas['col_data'], colunas['col_vendas'], colunas['col_estado']
-        )
+    #with tabs[5]:
+    #    show_report(
+    #        metricas.get('report'), metricas.get('dados_suficientes'),
+    #        colunas['col_data'], colunas['col_vendas'], colunas['col_estado']
+    #    )
 
 # Footer
 st.markdown("---")
