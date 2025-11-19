@@ -4,15 +4,15 @@ import streamlit as st
 stripe_public_key = st.secrets.get("STRIPE_PUBLIC_KEY", "")
 
 STRIPE_PAYMENT_LINKS = {
-    "basic": "https://buy.stripe.com/7sY00cbIu8ub6gleasbsc00",
-    "pro": "https://buy.stripe.com/bJebIUdQCh0HawB6I0bsc01",
-    "enterprise": "https://buy.stripe.com/28EcMYaEq7q77kp9Ucbsc02"
+    "basic": "https://buy.stripe.com/00weV6bIufWDgUZfewbsc03",
+    "pro": "https://buy.stripe.com/9B63co4g25hZ48d0jCbsc04",
+    "enterprise": "https://buy.stripe.com/00weV65k6aCj349aYgbsc05"
 }
 
 PLANOS = {
     "basic": {
         "nome": "Básico",
-        "preco": 197,
+        "preco": 60,
         "ideal": "Ideal para pequenas empresas que estão começando",
         "features": [
             "Dashboards Analíticos",
@@ -23,7 +23,7 @@ PLANOS = {
     },
     "pro": {
         "nome": "Profissional",
-        "preco": 397,
+        "preco": 120,
         "ideal": "Ideal para negócios em crescimento que precisam de mais suporte",
         "features": [
             "Dashboards Analíticos",
@@ -35,7 +35,7 @@ PLANOS = {
     },
     "enterprise": {
         "nome": "Enterprise",
-        "preco": 597,
+        "preco": 180,
         "ideal": "Ideal para empresas consolidadas que precisam de soluções completas",
         "features": [
             "Dashboards Analíticos",
@@ -50,7 +50,7 @@ PLANOS = {
 
 
 def show_pricing():
-    st.markdown("## 💰 Planos e Preços")
+    st.markdown("## Planos e Preços")
     st.markdown("Escolha o plano ideal para seu negócio")
     
     cols = st.columns(3)
@@ -62,7 +62,7 @@ def show_pricing():
                 <h3 style='text-align:center;'>{plano['nome']}</h3>
                 <h2 style='text-align:center; color:#636EFA;'>R$ {plano['preco']}/mês</h2>
                 <ul style='padding-left:18px;'>
-                    {''.join([f'<li>✅ {feature}</li>' for feature in plano['features']])}
+                    {''.join([f'<li>{feature}</li>' for feature in plano['features']])}
                 </ul>
                 <h4 style='text-align:center; color:#999; font-size:14px;'>{plano['ideal']}</h4>
                 <div style='text-align:center; margin-top:16px;'>

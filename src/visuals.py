@@ -53,7 +53,7 @@ def export_table_buttons(df, label):
         )
 
 def show_metric_cards(total_vendas, vendas_por_dia, numero_dias, total_estados, total_clientes, total_produtos, total_vendedores, receita_bruta, receita_liquida, total_impostos, lucro_bruto, lucro_liquido):
-    st.markdown("### 📊 Métricas Principais")
+    st.markdown("### Métricas Principais")
     col1, col2, col3, col4 = st.columns(4)
     with col1:
         st.metric("Total de Vendas", f"R$ {total_vendas:,.2f}" if total_vendas is not None else "N/D")
@@ -66,7 +66,7 @@ def show_metric_cards(total_vendas, vendas_por_dia, numero_dias, total_estados, 
     st.markdown("---")
 
     if any([total_clientes, total_produtos, total_vendedores, receita_bruta]):
-        st.markdown("### 👥 Métricas de Cliente e Produto")
+        st.markdown("### Métricas de Cliente e Produto")
         col1, col2, col3, col4 = st.columns(4)
         with col1:
             st.metric("Total de Clientes", total_clientes if total_clientes is not None else "N/D")
@@ -79,7 +79,7 @@ def show_metric_cards(total_vendas, vendas_por_dia, numero_dias, total_estados, 
         st.markdown("---")
 
     if any([receita_liquida, total_impostos, lucro_bruto, lucro_liquido]):
-        st.markdown("### 💰 Métricas Financeiras")
+        st.markdown("### Métricas Financeiras")
         col1, col2, col3, col4 = st.columns(4)
         with col1:
             st.metric("Receita Líquida", f"R$ {receita_liquida:,.2f}" if receita_liquida is not None else "N/D")
@@ -91,7 +91,7 @@ def show_metric_cards(total_vendas, vendas_por_dia, numero_dias, total_estados, 
             st.metric("Lucro Líquido", f"R$ {lucro_liquido:,.2f}" if lucro_liquido is not None else "N/D")
 
 def show_geotemporal_analysis(top_estados, df_semanal, df, col_estado, col_vendas, col_data):
-    st.markdown("#### 📊 Análise Geográfica e Temporal")
+    st.markdown("#### Análise Geográfica e Temporal")
     col_graf1, col_graf2, col_graf3 = st.columns(3)
     with col_graf1:
         if top_estados is not None and len(top_estados) > 0:
@@ -131,7 +131,7 @@ def show_geotemporal_analysis(top_estados, df_semanal, df, col_estado, col_venda
         st.info("Não foi possível gerar a tabela dinâmica de estados.")
 
 def show_client_product_analysis(top_clientes, top_produtos, vendas_por_categoria):
-    st.markdown("#### 👥 Análise de Clientes e Produtos")
+    st.markdown("#### Análise de Clientes e Produtos")
     col_graf1, col_graf2, col_graf3 = st.columns(3)
     with col_graf1:
         if top_clientes is not None and len(top_clientes) > 0:
@@ -204,7 +204,7 @@ def show_report(report, dados_suficientes, col_data, col_vendas, col_estado):
             st.stop()
     report_md = None
     if report and dados_suficientes:
-        with st.spinner("🔄 Gerando análise inteligente..."):
+        with st.spinner("Gerando análise inteligente..."):
             try:
                 IAHUB_API_KEY = st.secrets.get("IAHUB_API_KEY", "")
                 IAHUB_URL = st.secrets.get("IAHUB_URL", "")
@@ -223,7 +223,7 @@ def show_report(report, dados_suficientes, col_data, col_vendas, col_estado):
                 response = requests.post(IAHUB_URL, json=payload, headers=headers)
                 if response.status_code == 200:
                     report_md = response.json().get("resposta", "Relatório não gerado pela API.")
-                    st.markdown("### 📑 Relatório Analítico")
+                    st.markdown("### Relatório Analítico")
                     with st.expander("Visualizar Relatório Completo", expanded=True):
                         st.markdown(report_md, unsafe_allow_html=True)
                 else:
@@ -235,22 +235,22 @@ def show_report(report, dados_suficientes, col_data, col_vendas, col_estado):
         with col_pdf:
             export_report_pdf(report_md)
     if not dados_suficientes:
-        st.warning("⚠️ **Dados Insuficientes para Relatório**")
+        st.warning("**Dados Insuficientes para Relatório**")
         st.info(f"""
         Para gerar um relatório analítico, o CSV deve conter pelo menos:
         - **Coluna de Data**: para análise temporal
         - **Coluna de Vendas**: para cálculos financeiros
 
         **Colunas detectadas no seu arquivo:**
-        - Data: {'✅' if col_data else '❌'} {col_data or 'Não encontrada'}
-        - Vendas: {'✅' if col_vendas else '❌'} {col_vendas or 'Não encontrada'}
-        - Estados: {'✅' if col_estado else '❌'} {col_estado or 'Não encontrada'}
+        - Data: {'Sim' if col_data else 'Não'} {col_data or 'Não encontrada'}
+        - Vendas: {'Sim' if col_vendas else 'Não'} {col_vendas or 'Não encontrada'}
+        - Estados: {'Sim' if col_estado else 'Não'} {col_estado or 'Não encontrada'}
         """)
     if not report and not dados_suficientes:
         st.info("Relatório não disponível: verifique se a API respondeu corretamente.")
 
 def show_commercial_financial_analysis(top_vendedores, vendas_por_canal, vendas_por_pagamento):
-    st.markdown("#### 💼 Análise Comercial e Financeira")
+    st.markdown("#### Análise Comercial e Financeira")
     col_graf1, col_graf2, col_graf3 = st.columns(3)
     with col_graf1:
         if top_vendedores is not None and len(top_vendedores) > 0:
@@ -299,7 +299,7 @@ def show_commercial_financial_analysis(top_vendedores, vendas_por_canal, vendas_
     export_table_buttons(tabela_canais, "Canais")
 
 def show_temporal_segmentation_analysis(vendas_por_mes, vendas_por_dia_semana, vendas_por_segmento):
-    st.markdown("#### 📅 Análise Temporal e Segmentação")
+    st.markdown("#### Análise Temporal e Segmentação")
     col_graf1, col_graf2, col_graf3 = st.columns(3)
     with col_graf1:
         if vendas_por_mes is not None and len(vendas_por_mes) > 0:

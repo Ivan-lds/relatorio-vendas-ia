@@ -404,14 +404,14 @@ FORMULAS = {
 
 def show_formulas_catalog():
     """Exibe o catálogo de fórmulas do Excel organizado por categorias"""
-    st.markdown("## 📚 Catálogo de Fórmulas do Excel")
+    st.markdown("## Catálogo de Fórmulas do Excel")
     
     # Barra de pesquisa
-    search_term = st.text_input("🔍 Pesquisar fórmula:", placeholder="Digite o nome da fórmula ou descrição...")
+    search_term = st.text_input("Pesquisar fórmula:", placeholder="Digite o nome da fórmula ou descrição...")
     
     # Filtro por categoria
     categorias = list(FORMULAS.keys())
-    categoria_selecionada = st.selectbox("📂 Filtrar por categoria:", ["Todas"] + categorias)
+    categoria_selecionada = st.selectbox("Filtrar por categoria:", ["Todas"] + categorias)
     
     st.markdown("---")
     
@@ -439,13 +439,13 @@ def show_formulas_catalog():
     
     # Exibir fórmulas
     if not formulas_filtradas or all(not formulas for formulas in formulas_filtradas.values()):
-        st.warning("🔍 Nenhuma fórmula encontrada com os critérios de busca.")
+        st.warning("Nenhuma fórmula encontrada com os critérios de busca.")
     else:
         for categoria, formulas in formulas_filtradas.items():
             if not formulas:
                 continue
                 
-            st.markdown(f"### 🔵 {categoria}")
+            st.markdown(f"### {categoria}")
             
             # Criar cards para cada fórmula
             for i in range(0, len(formulas), 4):
@@ -470,11 +470,11 @@ def show_formulas_catalog():
                                     <code style='color: #636EFA; font-size: 13px; font-weight: bold; word-break: break-all;'>{formula['formula']}</code>
                                 </div>
                                 <p style='font-size: 14px; margin: 8px 0; line-height: 1.5;'>
-                                    <strong>📝 Descrição:</strong><br/>
+                                    <strong>Descrição:</strong><br/>
                                     {formula['descricao']}
                                 </p>
                                 <p style='font-size: 13px; margin: 8px 0; line-height: 1.5;'>
-                                    <strong>💡 Exemplo:</strong><br/>
+                                    <strong>Exemplo:</strong><br/>
                                     <code style='color: #ccc; padding: 4px 8px; border-radius: 4px; font-size: 11px; word-break: break-all; display: inline-block; margin-top: 4px;'>{formula['exemplo']}</code>
                                 </p>
                             </div>
@@ -483,7 +483,7 @@ def show_formulas_catalog():
             st.markdown("---")
     
     # Seção de dicas
-    st.markdown("### 💡 Dicas de Uso")
+    st.markdown("### Dicas de Uso")
     st.info("""
     **Dicas importantes:**
     - Use **FALSO** no PROCV para busca exata, **VERDADEIRO** para aproximada
@@ -495,7 +495,7 @@ def show_formulas_catalog():
     
     # Estatísticas
     total_formulas = sum(len(formulas) for formulas in FORMULAS.values())
-    st.markdown(f"### 📊 Estatísticas")
+    st.markdown(f"### Estatísticas")
     col1, col2, col3 = st.columns(3)
     with col1:
         st.metric("Total de Fórmulas", total_formulas)

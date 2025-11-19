@@ -1,4 +1,3 @@
-# Módulo de catálogo de planilhas Excel para venda
 import streamlit as st
 
 # Dicionário de planilhas organizadas por categoria
@@ -18,7 +17,7 @@ PLANILHAS = {
             ],
             "categoria": "Financeiro",
             "formato": "Excel (.xlsx)",
-            "link_stripe": ""  # Adicionar link do Stripe quando disponível
+            "link_stripe": "https://buy.stripe.com/5kQeV613Q11J9sx5DWbsc0i" 
         },
         {
             "nome": "Gestão de Orçamento Familiar",
@@ -34,7 +33,7 @@ PLANILHAS = {
             ],
             "categoria": "Financeiro",
             "formato": "Excel (.xlsx)",
-            "link_stripe": ""
+            "link_stripe": "https://buy.stripe.com/6oU28keUG6m39sx5DWbsc0h"
         },
         {
             "nome": "Calculadora de Empréstimos e Financiamentos",
@@ -50,7 +49,7 @@ PLANILHAS = {
             ],
             "categoria": "Financeiro",
             "formato": "Excel (.xlsx)",
-            "link_stripe": ""
+            "link_stripe": "https://buy.stripe.com/4gM3co5k64dVfQV9Ucbsc0g"
         }
     ],
     "Vendas": [
@@ -68,7 +67,7 @@ PLANILHAS = {
             ],
             "categoria": "Vendas",
             "formato": "Excel (.xlsx)",
-            "link_stripe": ""
+            "link_stripe": "https://buy.stripe.com/5kQdR28wi4dVcEJ3vObsc0f"
         },
         {
             "nome": "CRM Básico em Excel",
@@ -84,7 +83,7 @@ PLANILHAS = {
             ],
             "categoria": "Vendas",
             "formato": "Excel (.xlsx)",
-            "link_stripe": ""
+            "link_stripe": "https://buy.stripe.com/6oU9AMfYK5hZ8ot7M4bsc0e"
         },
         {
             "nome": "Análise de Vendas com Dashboard",
@@ -100,7 +99,7 @@ PLANILHAS = {
             ],
             "categoria": "Vendas",
             "formato": "Excel (.xlsx)",
-            "link_stripe": ""
+            "link_stripe": "https://buy.stripe.com/14A3co3bY5hZgUZ7M4bsc0d"
         }
     ],
     "Recursos Humanos": [
@@ -118,7 +117,7 @@ PLANILHAS = {
             ],
             "categoria": "Recursos Humanos",
             "formato": "Excel (.xlsx)",
-            "link_stripe": ""
+            "link_stripe": "https://buy.stripe.com/aFa5kwfYK6m3gUZ4zSbsc0c"
         },
         {
             "nome": "Gestão de Funcionários e Benefícios",
@@ -134,7 +133,7 @@ PLANILHAS = {
             ],
             "categoria": "Recursos Humanos",
             "formato": "Excel (.xlsx)",
-            "link_stripe": ""
+            "link_stripe": "https://buy.stripe.com/28E3co6oadOvcEJ5DWbsc0b"
         }
     ],
     "Estoque": [
@@ -152,7 +151,7 @@ PLANILHAS = {
             ],
             "categoria": "Estoque",
             "formato": "Excel (.xlsx)",
-            "link_stripe": ""
+            "link_stripe": "https://buy.stripe.com/aFa7sE8wi5hZawBgiAbsc0a"
         },
         {
             "nome": "Gestão de Fornecedores e Compras",
@@ -168,7 +167,7 @@ PLANILHAS = {
             ],
             "categoria": "Estoque",
             "formato": "Excel (.xlsx)",
-            "link_stripe": ""
+            "link_stripe": "https://buy.stripe.com/3cI7sE3bYcKrdIN9Ucbsc09"
         }
     ],
     "Projetos": [
@@ -186,7 +185,7 @@ PLANILHAS = {
             ],
             "categoria": "Projetos",
             "formato": "Excel (.xlsx)",
-            "link_stripe": ""
+            "link_stripe": "https://buy.stripe.com/28E4gsfYKaCjdIN2rKbsc08"
         }
     ],
     "Outros": [
@@ -204,7 +203,7 @@ PLANILHAS = {
             ],
             "categoria": "Outros",
             "formato": "Excel (.xlsx)",
-            "link_stripe": ""
+            "link_stripe": "https://buy.stripe.com/3cIfZah2OfWDgUZaYgbsc07"
         },
         {
             "nome": "Controle de Estudos e Aprendizado",
@@ -220,7 +219,7 @@ PLANILHAS = {
             ],
             "categoria": "Outros",
             "formato": "Excel (.xlsx)",
-            "link_stripe": ""
+            "link_stripe": "https://buy.stripe.com/dRm5kwh2OeSzcEJeasbsc06"
         }
     ]
 }
@@ -228,15 +227,15 @@ PLANILHAS = {
 
 def show_spreadsheets_catalog():
     """Exibe o catálogo de planilhas Excel organizado por categorias"""
-    st.markdown("## 📊 Catálogo de Planilhas Excel")
+    st.markdown("## Catálogo de Planilhas Excel")
     st.markdown("### Planilhas profissionais prontas para uso")
     
     # Barra de pesquisa
-    search_term = st.text_input("🔍 Pesquisar planilha:", placeholder="Digite o nome da planilha ou descrição...")
+    search_term = st.text_input("Pesquisar planilha:", placeholder="Digite o nome da planilha ou descrição...")
     
     # Filtro por categoria
     categorias = list(PLANILHAS.keys())
-    categoria_selecionada = st.selectbox("📂 Filtrar por categoria:", ["Todas"] + categorias)
+    categoria_selecionada = st.selectbox("Filtrar por categoria:", ["Todas"] + categorias)
     
     st.markdown("---")
     
@@ -264,13 +263,13 @@ def show_spreadsheets_catalog():
     
     # Exibir planilhas
     if not planilhas_filtradas or all(not planilhas for planilhas in planilhas_filtradas.values()):
-        st.warning("🔍 Nenhuma planilha encontrada com os critérios de busca.")
+        st.warning("Nenhuma planilha encontrada com os critérios de busca.")
     else:
         for categoria, planilhas in planilhas_filtradas.items():
             if not planilhas:
                 continue
                 
-            st.markdown(f"### 🔵 {categoria}")
+            st.markdown(f"### {categoria}")
             
             # Criar cards para cada planilha
             for i in range(0, len(planilhas), 3):
@@ -305,14 +304,14 @@ def show_spreadsheets_catalog():
                                         {planilha['descricao']}
                                     </p>
                                     <div style='margin: 15px 0;'>
-                                        <strong style='font-size: 13px;'>✅ Características:</strong>
+                                        <strong style='font-size: 13px;'>Características:</strong>
                                         <ul style='font-size: 12px; padding-left: 20px; margin-top: 8px; line-height: 1.6;'>
                                             {''.join([f'<li>{carac}</li>' for carac in planilha['caracteristicas'][:4]])}
                                             {f'<li style="color: #999;"><em>+{len(planilha["caracteristicas"])-4} mais...</em></li>' if len(planilha['caracteristicas']) > 4 else ''}
                                         </ul>
                                     </div>
                                     <p style='font-size: 11px; color: #999; margin-top: 10px;'>
-                                        📄 {planilha['formato']}
+                                        {planilha['formato']}
                                     </p>
                                 </div>
                             </div>
@@ -333,28 +332,28 @@ def show_spreadsheets_catalog():
                                             font-weight: bold;
                                             cursor: pointer;
                                             width: 100%;
-                                        '>🛒 Comprar Agora</button>
+                                        '>Comprar Agora</button>
                                     </a>
                                 </div>
                                 """, unsafe_allow_html=True)
                             else:
-                                st.button("🛒 Comprar Agora", key=f"comprar_{categoria}_{idx}", disabled=True, 
+                                st.button("Comprar Agora", key=f"comprar_{categoria}_{idx}", disabled=True, 
                                          help="Link de compra em breve. Entre em contato para mais informações.")
             
             st.markdown("---")
     
     # Seção de informações
-    st.markdown("### ℹ️ Informações Importantes")
+    st.markdown("### Informações Importantes")
     col1, col2 = st.columns(2)
     
     with col1:
         st.info("""
-        **📥 Entrega:**
+        **Entrega:**
         - Planilhas enviadas por e-mail após confirmação do pagamento
         - Formato Excel (.xlsx)
         - Compatível com Excel 2010 ou superior
         
-        **💡 Suporte:**
+        **Suporte:**
         - Vídeo tutorial incluso
         - Manual de uso detalhado
         - Suporte por email (até 30 dias após compra)
@@ -362,12 +361,12 @@ def show_spreadsheets_catalog():
     
     with col2:
         st.info("""
-        **🔒 Garantia:**
+        **Garantia:**
         - 7 dias para testar
         - Reembolso garantido se não atender suas necessidades
         - Planilhas testadas e validadas
         
-        **💳 Pagamento:**
+        **Pagamento:**
         - Pagamento seguro via Stripe
         - Aceita cartão de crédito e PIX
         - Acesso imediato após pagamento
@@ -381,7 +380,7 @@ def show_spreadsheets_catalog():
         if planilhas
     ) / len([p for p in PLANILHAS.values() if p])
     
-    st.markdown("### 📊 Estatísticas")
+    st.markdown("### Estatísticas")
     col1, col2, col3 = st.columns(3)
     with col1:
         st.metric("Total de Planilhas", total_planilhas)

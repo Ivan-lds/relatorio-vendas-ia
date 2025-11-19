@@ -19,7 +19,6 @@ from src.spreadsheets import show_spreadsheets_catalog
 
 st.set_page_config(
     page_title="Analytics BI Pro - Relatório Inteligente",
-    page_icon="📊",
     layout="wide",
     initial_sidebar_state="expanded"
 )
@@ -43,7 +42,7 @@ def login_gate() -> bool:
     if not sb:
         st.info("Login desabilitado (credenciais Supabase ausentes). Prosseguindo sem login...")
         return True
-    st.markdown("## 🔐 Acesso")
+    st.markdown("## Acesso")
     tab_login, tab_signup = st.tabs(["Entrar", "Criar conta"]) 
 
     with tab_login:
@@ -82,7 +81,7 @@ def login_gate() -> bool:
 
 col_menu, col_logout = st.columns([8, 0.65])
 with col_menu:
-    menu = st.radio("", ["📊 Dashboard", "📚 Fórmulas", "📑 Planilhas", "💰 Planos"], horizontal=True)
+    menu = st.radio("", ["Dashboard", "Fórmulas", "Planilhas", "Planos"], horizontal=True)
 with col_logout:
     if st.session_state.get("auth_user"):
         if st.button("Sair"):
@@ -95,20 +94,20 @@ with col_logout:
             st.session_state.auth_user = None
             st.rerun()
 
-if menu == "💰 Planos":
+if menu == "Planos":
     show_pricing()
     st.stop()
 
-if menu == "📚 Fórmulas":
+if menu == "Fórmulas":
     show_formulas_catalog()
     st.stop()
 
-if menu == "📑 Planilhas":
+if menu == "Planilhas":
     show_spreadsheets_catalog()
     st.stop()
 
 with st.sidebar:
-    st.header("ℹ️ Informações")
+    st.header("Informações")
     st.markdown("""
         ### Como usar
         1. Faça upload do arquivo CSV ou Excel (xlsx)
@@ -117,21 +116,21 @@ with st.sidebar:
         
         ### Colunas aceitas (flexíveis)
         
-        **📅 Básicas (obrigatórias para relatório):**
+        **Básicas (obrigatórias para relatório):**
         - Data: Dia, Data, Date, Dt, Data Venda
         - Vendas: Vendas, Valor, Faturamento, Receita, Total, Sales, Amount
         
-        **👥 Cliente:** Cliente, Nome, CPF/CNPJ, Segmento, Faixa Etária, Sexo
+        **Cliente:** Cliente, Nome, CPF/CNPJ, Segmento, Faixa Etária, Sexo
                 
-        **🛒 Produto:** Produto, Categoria, Marca, Quantidade, Preço, Desconto
+        **Produto:** Produto, Categoria, Marca, Quantidade, Preço, Desconto
                 
-        **💰 Financeiro:** Receita Bruta/Líquida, Impostos, Lucro, Ticket Médio
+        **Financeiro:** Receita Bruta/Líquida, Impostos, Lucro, Ticket Médio
                 
-        **📦 Logística:** Estoque, Frete, Prazo, Transportadora
+        **Logística:** Estoque, Frete, Prazo, Transportadora
                 
-        **📅 Temporal:** Dia da Semana, Mês, Ano, Horário
+        **Temporal:** Dia da Semana, Mês, Ano, Horário
                 
-        **👥 Comercial:** Vendedor, Canal, Campanha, Comissão, Meta
+        **Comercial:** Vendedor, Canal, Campanha, Comissão, Meta
                 
         - As colunas são detectadas por nome (aceita maiúsculas/minúsculas)
                 
@@ -148,15 +147,15 @@ with st.sidebar:
 if not login_gate():
     st.stop()
 
-st.title("📈 Analytics BI Pro")
+st.title("Analytics BI Pro")
 st.markdown("### Sistema Inteligente de Análise de Vendas")
 
 csv_file = st.file_uploader("Selecione o arquivo de vendas (CSV ou Excel)", type=["csv", "xlsx"])
 if not csv_file:
-    st.warning("⚠️ Aguardando upload do arquivo...")
+    st.warning("Aguardando upload do arquivo...")
     st.stop()
 else:
-    st.success("✅ Arquivo carregado com sucesso!")
+    st.success("Arquivo carregado com sucesso!")
     filename = csv_file.name.lower()
     if filename.endswith(".csv"):
         df = pd.read_csv(csv_file)

@@ -1060,9 +1060,9 @@ def gerar_todas_planilhas(output_dir="planilhas"):
             caminho = os.path.join(output_dir, nome_arquivo)
             wb = funcao_geradora()
             wb.save(caminho)
-            resultados.append(f"✅ {nome_arquivo} criada com sucesso!")
+            resultados.append(f"{nome_arquivo} criada com sucesso!")
         except Exception as e:
-            resultados.append(f"❌ Erro ao criar {nome_arquivo}: {str(e)}")
+            resultados.append(f"Erro ao criar {nome_arquivo}: {str(e)}")
     
     return resultados
 
