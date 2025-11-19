@@ -73,3 +73,48 @@ def show_pricing():
                 <p style='text-align:center; color:#888; font-size:13px;'>Pagamento 100% seguro via Stripe</p>
             </div>
             """, unsafe_allow_html=True)
+        
+    # end for
+
+    # Seção de FAQ (Perguntas Frequentes) - exibida uma vez abaixo dos cards
+    st.markdown("---")
+    st.markdown("### Perguntas Frequentes")
+
+    FAQ = [
+        {
+            "q": "Por que sua plataforma é melhor que usar Excel?",
+            "a": "Nossa plataforma automatiza a preparação dos dados, calcula KPIs relevantes, gera dashboards interativos e produz um relatório executivo pronto para apresentação — tudo em minutos e sem montar tabelas-pivô ou fórmulas manualmente. Isso reduz erros, economiza tempo e entrega recomendações acionáveis que o Excel sozinho não fornece sem muito trabalho." 
+        },
+        {
+            "q": "Por que eu devo pagar por isso?",
+            "a": "Você paga por tempo e decisão. Em vez de gastar horas preparando relatórios, sua equipe recebe insights prontos para agir. Identificar produtos com baixa margem, canais ineficientes ou oportunidades de aumento de receita frequentemente traz retorno superior ao custo da assinatura." 
+        },
+        {
+            "q": "Como a IA é usada aqui? Posso confiar nos relatórios gerados?",
+            "a": "A IA (quando configurada) é usada apenas para transformar métricas tratadas em um relatório executivo claro. Os cálculos e visualizações são feitos sobre dados já processados pela plataforma — isso torna os resultados mais confiáveis que um texto gerado sem contexto. Você sempre pode revisar, exportar e validar os dados antes de tomar decisões." 
+        },
+        {
+            "q": "Quais dados eu preciso enviar?",
+            "a": "Basta um CSV ou Excel com pelo menos coluna de Data e Vendas. Quanto mais colunas (cliente, produto, estado, canal, forma de pagamento), mais análises e segmentações automáticas você receberá." 
+        },
+        {
+            "q": "Meus dados estarão seguros?",
+            "a": "Os uploads são processados pela infraestrutura do app e pagamentos são realizados via Stripe (seguro). Não usamos seus dados para treinar modelos públicos sem consentimento; podemos formalizar acordos de privacidade/NDA para clientes Enterprise." 
+        },
+        {
+            "q": "O que significam 'gerações/mês' nos planos?",
+            "a": "Refere-se ao número de análises/relatórios automáticos permitidos por mês. É um controle de uso pensado para garantir performance e custo previsível. Para necessidades maiores, o plano Enterprise permite acordos personalizados ou geração ilimitada conforme contrato." 
+        },
+        {
+            "q": "Vocês fazem integração com meu ERP/CRM?",
+            "a": "Atualmente aceitamos upload de CSV/XLSX. Para clientes Enterprise podemos planejar integrações customizadas para automatizar importações (via API, banco ou conexão direta)." 
+        },
+        {
+            "q": "Posso testar antes de assinar?",
+            "a": "Sim — oferecemos demonstrações e há garantia para os templates (7 dias). Para planos podemos criar trials comerciais conforme estratégia de vendas; entre em contato pelo WhatsApp para combinar uma demo rápida." 
+        }
+    ]
+
+    for item in FAQ:
+        with st.expander(item['q'], expanded=False):
+            st.markdown(item['a'])
